@@ -1,6 +1,12 @@
 package com.dev.synapse.panel;
 
+import com.dev.synapse.dialogs.ManageInstitutions;
+import com.dev.synapse.dialogs.ViewBloodRequests;
+import com.dev.synapse.gui.HomeScreen;
+
 public class AdminPanel extends javax.swing.JPanel {
+    
+    private HomeScreen homeScreen;
 
     public AdminPanel() {
         initComponents();
@@ -33,18 +39,19 @@ public class AdminPanel extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         mainPanel01 = new javax.swing.JPanel();
+        logoutBtn = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         mainPanel02 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        logoutBtn1 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         titlePanel.setBackground(new java.awt.Color(255, 255, 255));
         titlePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200)));
+        titlePanel.setOpaque(false);
 
         jLabel1.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -249,6 +256,17 @@ public class AdminPanel extends javax.swing.JPanel {
         mainPanel01.setBackground(new java.awt.Color(255, 255, 255));
         mainPanel01.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200)));
 
+        logoutBtn.setBackground(new java.awt.Color(255, 255, 255));
+        logoutBtn.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
+        logoutBtn.setForeground(new java.awt.Color(102, 102, 102));
+        logoutBtn.setText("View All");
+        logoutBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        logoutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutBtnActionPerformed(evt);
+            }
+        });
+
         jLabel15.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("Recent Blood Requests");
@@ -256,8 +274,6 @@ public class AdminPanel extends javax.swing.JPanel {
         jLabel16.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("L");
-
-        jButton1.setText("View All");
 
         javax.swing.GroupLayout mainPanel01Layout = new javax.swing.GroupLayout(mainPanel01);
         mainPanel01.setLayout(mainPanel01Layout);
@@ -268,9 +284,9 @@ public class AdminPanel extends javax.swing.JPanel {
                 .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addComponent(logoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
         mainPanel01Layout.setVerticalGroup(
             mainPanel01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,16 +295,14 @@ public class AdminPanel extends javax.swing.JPanel {
                 .addGroup(mainPanel01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(jLabel16)
-                    .addComponent(jButton1))
-                .addContainerGap(337, Short.MAX_VALUE))
+                    .addComponent(logoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(338, Short.MAX_VALUE))
         );
 
         jPanel5.add(mainPanel01);
 
         mainPanel02.setBackground(new java.awt.Color(255, 255, 255));
         mainPanel02.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200)));
-
-        jButton2.setText("View All");
 
         jLabel17.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 0, 0));
@@ -298,6 +312,17 @@ public class AdminPanel extends javax.swing.JPanel {
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setText("L");
 
+        logoutBtn1.setBackground(new java.awt.Color(255, 255, 255));
+        logoutBtn1.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
+        logoutBtn1.setForeground(new java.awt.Color(102, 102, 102));
+        logoutBtn1.setText("Manage");
+        logoutBtn1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        logoutBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutBtn1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainPanel02Layout = new javax.swing.GroupLayout(mainPanel02);
         mainPanel02.setLayout(mainPanel02Layout);
         mainPanel02Layout.setHorizontalGroup(
@@ -305,21 +330,21 @@ public class AdminPanel extends javax.swing.JPanel {
             .addGroup(mainPanel02Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel17)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addComponent(logoutBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
         mainPanel02Layout.setVerticalGroup(
             mainPanel02Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanel02Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(14, 14, 14)
                 .addGroup(mainPanel02Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
                     .addComponent(jLabel18)
-                    .addComponent(jButton2))
-                .addContainerGap(335, Short.MAX_VALUE))
+                    .addComponent(logoutBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(338, Short.MAX_VALUE))
         );
 
         jPanel5.add(mainPanel02);
@@ -363,14 +388,24 @@ public class AdminPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void logoutBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtn1ActionPerformed
+        ManageInstitutions manageIns = new ManageInstitutions(homeScreen, true);
+        manageIns.setLocationRelativeTo(this);
+        manageIns.setVisible(true);
+    }//GEN-LAST:event_logoutBtn1ActionPerformed
+
+    private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
+        ViewBloodRequests viewBloodReq = new ViewBloodRequests(homeScreen, true);
+        viewBloodReq.setLocationRelativeTo(this);
+        viewBloodReq.setVisible(true);
+    }//GEN-LAST:event_logoutBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel cardPanel01;
     private javax.swing.JPanel cardPanel02;
     private javax.swing.JPanel cardPanel03;
     private javax.swing.JPanel cardPanel04;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -392,6 +427,8 @@ public class AdminPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JButton logoutBtn;
+    private javax.swing.JButton logoutBtn1;
     private javax.swing.JPanel mainPanel01;
     private javax.swing.JPanel mainPanel02;
     private javax.swing.JPanel titlePanel;
