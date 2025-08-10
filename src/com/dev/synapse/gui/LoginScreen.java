@@ -10,18 +10,18 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class LoginScreen extends javax.swing.JFrame {
-    
+
     private final HomeScreen homeScreen = new HomeScreen();
-    
+
     public LoginScreen() {
         initComponents();
         styles();
     }
-    
+
     private void styles() {
         userInput.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         passwordInput.putClientProperty(FlatClientProperties.STYLE, "arc:20");
-        loginImage.setIcon(new FlatSVGIcon("com/dev/synapse/assets/login-banner.svg", 
+        loginImage.setIcon(new FlatSVGIcon("com/dev/synapse/assets/login-banner.svg",
                 loginImage.getPreferredSize().width,
                 loginImage.getPreferredSize().height
         ));
@@ -38,10 +38,10 @@ public class LoginScreen extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         registerHereBtn = new javax.swing.JLabel();
         passwordInput = new javax.swing.JPasswordField();
-        signInBtn = new com.dev.synapse.components.PrimaryButton();
         jPanel1 = new javax.swing.JPanel();
         loginImage = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        signInBtn = new com.dev.synapse.components.PrimaryButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,13 +72,6 @@ public class LoginScreen extends javax.swing.JFrame {
 
         passwordInput.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
 
-        signInBtn.setText("Sign in");
-        signInBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signInBtnActionPerformed(evt);
-            }
-        });
-
         loginImage.setPreferredSize(new java.awt.Dimension(349, 424));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -102,6 +95,13 @@ public class LoginScreen extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(153, 153, 153));
         jLabel6.setText("Sign in to access Synapse system");
 
+        signInBtn.setText("Sign in");
+        signInBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signInBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -112,15 +112,14 @@ public class LoginScreen extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(75, 75, 75)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(271, 271, 271))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(passwordInput)
-                                .addComponent(userInput)
-                                .addComponent(signInBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE))
-                            .addComponent(jLabel2)))
+                            .addComponent(passwordInput)
+                            .addComponent(userInput)
+                            .addComponent(jLabel2)
+                            .addComponent(signInBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(134, 134, 134)
                         .addComponent(registerHereBtn))
@@ -152,8 +151,8 @@ public class LoginScreen extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(passwordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52)
-                        .addComponent(signInBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(signInBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(43, 43, 43)
                         .addComponent(registerHereBtn)))
                 .addContainerGap(52, Short.MAX_VALUE))
@@ -173,6 +172,11 @@ public class LoginScreen extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void registerHereBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerHereBtnMouseClicked
+        new RegisterScreen().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_registerHereBtnMouseClicked
 
     private void signInBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signInBtnActionPerformed
         String username = userInput.getText().trim();
@@ -220,9 +224,9 @@ public class LoginScreen extends javax.swing.JFrame {
                                 default:
                                     break;
                             }
-                        } 
+                        }
                     }
-                    
+
                 } else {
                     System.out.println("Invalid username or password.");
                 }
@@ -232,13 +236,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
         } catch (SQLException e) {
         }
-
     }//GEN-LAST:event_signInBtnActionPerformed
-
-    private void registerHereBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerHereBtnMouseClicked
-        new RegisterScreen().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_registerHereBtnMouseClicked
 
     public static void main(String args[]) {
 
@@ -251,7 +249,7 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
     }
- 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

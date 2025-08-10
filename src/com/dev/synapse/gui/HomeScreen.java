@@ -31,6 +31,7 @@ public class HomeScreen extends javax.swing.JFrame {
 
     private void styles() {
         userProfilePanel.putClientProperty(FlatClientProperties.STYLE, "arc:15");
+        logoutBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
         logo.putClientProperty(FlatClientProperties.STYLE, "arc:15");
         logo.setIcon(new FlatSVGIcon("com/dev/synapse/assets/synapse-logo.svg", logo.getWidth(), logo.getHeight()));
         profileLogo.setIcon(new FlatSVGIcon("com/dev/synapse/assets/user-profile.svg", profileLogo.getWidth(), profileLogo.getHeight()));
@@ -96,17 +97,18 @@ public class HomeScreen extends javax.swing.JFrame {
 
         label1 = new java.awt.Label();
         jPanel2 = new javax.swing.JPanel();
-        logo = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        contentPanel = new javax.swing.JPanel();
+        subHeaderPanel = new javax.swing.JPanel();
         userProfilePanel = new javax.swing.JPanel();
         profileLogo = new javax.swing.JLabel();
         homeUserName = new javax.swing.JLabel();
         homeUserRole = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        contentPanel = new javax.swing.JPanel();
         logoutBtn = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        logo = new javax.swing.JLabel();
 
         label1.setText("label1");
 
@@ -119,17 +121,17 @@ public class HomeScreen extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        logo.setOpaque(true);
+        jSeparator1.setForeground(new java.awt.Color(200, 200, 200));
 
-        jLabel2.setFont(new java.awt.Font("Poppins", 1, 19)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setText("Synapse");
+        jScrollPane1.setBorder(null);
 
-        jLabel3.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel3.setText("Blood Donation Management");
+        contentPanel.setBackground(new java.awt.Color(244, 244, 244));
+        contentPanel.setLayout(new java.awt.CardLayout());
+        jScrollPane1.setViewportView(contentPanel);
 
-        userProfilePanel.setBackground(new java.awt.Color(240, 240, 240));
+        subHeaderPanel.setOpaque(false);
+
+        userProfilePanel.setBackground(new java.awt.Color(244, 244, 244));
         userProfilePanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 userProfilePanelMouseClicked(evt);
@@ -173,67 +175,86 @@ public class HomeScreen extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jSeparator1.setForeground(new java.awt.Color(200, 200, 200));
-
-        jScrollPane1.setBorder(null);
-
-        contentPanel.setBackground(new java.awt.Color(204, 204, 204));
-        contentPanel.setLayout(new java.awt.CardLayout());
-        jScrollPane1.setViewportView(contentPanel);
-
-        logoutBtn.setBackground(new java.awt.Color(255, 255, 255));
+        logoutBtn.setBackground(new java.awt.Color(244, 244, 244));
         logoutBtn.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         logoutBtn.setForeground(new java.awt.Color(102, 102, 102));
         logoutBtn.setText("Logout");
-        logoutBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        logoutBtn.setBorder(null);
+        logoutBtn.setBorderPainted(false);
         logoutBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutBtnActionPerformed(evt);
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel3.setText("Blood Donation Management");
+
+        jLabel2.setFont(new java.awt.Font("Poppins", 1, 19)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setText("Synapse");
+
+        logo.setOpaque(true);
+
+        javax.swing.GroupLayout subHeaderPanelLayout = new javax.swing.GroupLayout(subHeaderPanel);
+        subHeaderPanel.setLayout(subHeaderPanelLayout);
+        subHeaderPanelLayout.setHorizontalGroup(
+            subHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(subHeaderPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addGroup(subHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
+                .addComponent(userProfilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(logoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        subHeaderPanelLayout.setVerticalGroup(
+            subHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(subHeaderPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(subHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(subHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(subHeaderPanelLayout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(jLabel3))
+                        .addComponent(logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(userProfilePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(subHeaderPanelLayout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(logoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(147, 147, 147)
-                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 291, Short.MAX_VALUE)
-                .addComponent(userProfilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(logoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(168, 168, 168))
+            .addComponent(jScrollPane1)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jSeparator1)
                 .addContainerGap())
-            .addComponent(jScrollPane1)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(148, 148, 148)
+                .addComponent(subHeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(158, 158, 158))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel3))
-                            .addComponent(logo, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-                            .addComponent(userProfilePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(logoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(15, 15, 15)
+                .addComponent(subHeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -244,7 +265,7 @@ public class HomeScreen extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -309,6 +330,7 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JLabel logo;
     private javax.swing.JButton logoutBtn;
     private javax.swing.JLabel profileLogo;
+    private javax.swing.JPanel subHeaderPanel;
     private javax.swing.JPanel userProfilePanel;
     // End of variables declaration//GEN-END:variables
 }
