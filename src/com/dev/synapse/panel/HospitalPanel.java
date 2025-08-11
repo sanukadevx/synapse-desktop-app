@@ -28,26 +28,27 @@ public class HospitalPanel extends javax.swing.JPanel {
         emergencyNoticesPanel.putClientProperty(FlatClientProperties.STYLE, "arc:15");
         viewallBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
 
-        FlatSVGIcon clockIcon = new FlatSVGIcon("com/dev/synapse/assets/clock-icon.svg", 30, 30);
+        FlatSVGIcon clockIcon = new FlatSVGIcon("com/dev/synapse/assets/heart-icon.svg", 30, 30);
         clockIcon.setColorFilter(new FlatSVGIcon.ColorFilter(color -> Color.red));
         iconLabel.putClientProperty(FlatClientProperties.STYLE, "arc:15");
         iconLabel.setIcon(clockIcon);
         iconLabel.setHorizontalAlignment(SwingConstants.CENTER);
         iconLabel.setVerticalAlignment(SwingConstants.CENTER);
 
-        FlatSVGIcon peopleIcon = new FlatSVGIcon("com/dev/synapse/assets/people-icon.svg", 32, 32);
+        FlatSVGIcon peopleIcon = new FlatSVGIcon("com/dev/synapse/assets/clock-icon.svg", 30, 30);
         peopleIcon.setColorFilter(new FlatSVGIcon.ColorFilter(color -> Color.red));
         iconLabel1.putClientProperty(FlatClientProperties.STYLE, "arc:15");
         iconLabel1.setIcon(peopleIcon);
         iconLabel1.setHorizontalAlignment(SwingConstants.CENTER);
         iconLabel1.setVerticalAlignment(SwingConstants.CENTER);
 
-        FlatSVGIcon heartIcon = new FlatSVGIcon("com/dev/synapse/assets/heart-icon.svg", 30, 30);
+        FlatSVGIcon heartIcon = new FlatSVGIcon("com/dev/synapse/assets/verify-icon.svg", 28, 28);
         heartIcon.setColorFilter(new FlatSVGIcon.ColorFilter(color -> Color.red));
         iconLabel2.putClientProperty(FlatClientProperties.STYLE, "arc:15");
         iconLabel2.setIcon(heartIcon);
         iconLabel2.setHorizontalAlignment(SwingConstants.CENTER);
         iconLabel2.setVerticalAlignment(SwingConstants.CENTER);
+        
         FlatSVGIcon warningIcon = new FlatSVGIcon("com/dev/synapse/assets/warning-icon.svg", 32, 32);
         warningIcon.setColorFilter(new FlatSVGIcon.ColorFilter(color -> Color.red));
         iconLabel3.putClientProperty(FlatClientProperties.STYLE, "arc:15");
@@ -57,7 +58,7 @@ public class HospitalPanel extends javax.swing.JPanel {
 
         FlatSVGIcon heartIcon2 = new FlatSVGIcon("com/dev/synapse/assets/heart-icon.svg", 28, 28);
         heartIcon2.setColorFilter(new FlatSVGIcon.ColorFilter(color -> Color.red));
-        recentReqLabel.setIcon(heartIcon2);
+        recentBloodReqLabel.setIcon(heartIcon2);
         
         newRequestBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
         requestHistoryBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
@@ -91,7 +92,7 @@ public class HospitalPanel extends javax.swing.JPanel {
         iconLabel3 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         mainPanel01 = new javax.swing.JPanel();
-        recentReqLabel = new javax.swing.JLabel();
+        recentBloodReqLabel = new javax.swing.JLabel();
         viewallBtn = new javax.swing.JButton();
         titlePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -318,9 +319,9 @@ public class HospitalPanel extends javax.swing.JPanel {
 
         mainPanel01.setBackground(new java.awt.Color(255, 255, 255));
 
-        recentReqLabel.setFont(new java.awt.Font("Poppins SemiBold", 0, 20)); // NOI18N
-        recentReqLabel.setForeground(new java.awt.Color(0, 0, 0));
-        recentReqLabel.setText("Recent Blood Requests");
+        recentBloodReqLabel.setFont(new java.awt.Font("Poppins SemiBold", 0, 20)); // NOI18N
+        recentBloodReqLabel.setForeground(new java.awt.Color(0, 0, 0));
+        recentBloodReqLabel.setText("Recent Blood Requests");
 
         viewallBtn.setBackground(new java.awt.Color(244, 244, 244));
         viewallBtn.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
@@ -340,7 +341,7 @@ public class HospitalPanel extends javax.swing.JPanel {
             mainPanel01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanel01Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(recentReqLabel)
+                .addComponent(recentBloodReqLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(viewallBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
@@ -350,9 +351,9 @@ public class HospitalPanel extends javax.swing.JPanel {
             .addGroup(mainPanel01Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(mainPanel01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(recentReqLabel)
+                    .addComponent(recentBloodReqLabel)
                     .addComponent(viewallBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(353, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -435,9 +436,9 @@ public class HospitalPanel extends javax.swing.JPanel {
                 .addComponent(recentReqLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(newRequestBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(requestHistoryBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(12, 12, 12))
+                .addGap(18, 18, 18)
+                .addComponent(requestHistoryBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         emergencyNoticesPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -451,7 +452,7 @@ public class HospitalPanel extends javax.swing.JPanel {
         );
         emergencyNoticesPanelLayout.setVerticalGroup(
             emergencyNoticesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 212, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -481,11 +482,11 @@ public class HospitalPanel extends javax.swing.JPanel {
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(quickActionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                        .addComponent(quickActionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(emergencyNoticesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
+                        .addComponent(emergencyNoticesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(50, 50, 50))
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -499,9 +500,7 @@ public class HospitalPanel extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -542,7 +541,7 @@ public class HospitalPanel extends javax.swing.JPanel {
     private javax.swing.JPanel mainPanel01;
     private javax.swing.JButton newRequestBtn;
     private javax.swing.JPanel quickActionPanel;
-    private javax.swing.JLabel recentReqLabel;
+    private javax.swing.JLabel recentBloodReqLabel;
     private javax.swing.JLabel recentReqLabel1;
     private javax.swing.JButton requestHistoryBtn;
     private javax.swing.JPanel titlePanel;
