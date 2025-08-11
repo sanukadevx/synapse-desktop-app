@@ -24,8 +24,8 @@ public class HospitalPanel extends javax.swing.JPanel {
         cardPanel03.putClientProperty(FlatClientProperties.STYLE, "arc:15");
         cardPanel04.putClientProperty(FlatClientProperties.STYLE, "arc:15");
         mainPanel01.putClientProperty(FlatClientProperties.STYLE, "arc:15");
-        mainPanel02.putClientProperty(FlatClientProperties.STYLE, "arc:15");
-        manageBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
+        quickActionPanel.putClientProperty(FlatClientProperties.STYLE, "arc:15");
+        emergencyNoticesPanel.putClientProperty(FlatClientProperties.STYLE, "arc:15");
         viewallBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
 
         FlatSVGIcon clockIcon = new FlatSVGIcon("com/dev/synapse/assets/clock-icon.svg", 30, 30);
@@ -58,10 +58,9 @@ public class HospitalPanel extends javax.swing.JPanel {
         FlatSVGIcon heartIcon2 = new FlatSVGIcon("com/dev/synapse/assets/heart-icon.svg", 28, 28);
         heartIcon2.setColorFilter(new FlatSVGIcon.ColorFilter(color -> Color.red));
         recentReqLabel.setIcon(heartIcon2);
-
-        FlatSVGIcon peopleIcon2 = new FlatSVGIcon("com/dev/synapse/assets/people-icon.svg", 28, 28);
-        peopleIcon2.setColorFilter(new FlatSVGIcon.ColorFilter(color -> Color.red));
-        pendingRegLabel.setIcon(peopleIcon2);
+        
+        newRequestBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
+        requestHistoryBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
     }
 
     @SuppressWarnings("unchecked")
@@ -94,12 +93,14 @@ public class HospitalPanel extends javax.swing.JPanel {
         mainPanel01 = new javax.swing.JPanel();
         recentReqLabel = new javax.swing.JLabel();
         viewallBtn = new javax.swing.JButton();
-        mainPanel02 = new javax.swing.JPanel();
-        pendingRegLabel = new javax.swing.JLabel();
-        manageBtn = new javax.swing.JButton();
         titlePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        quickActionPanel = new javax.swing.JPanel();
+        recentReqLabel1 = new javax.swing.JLabel();
+        newRequestBtn = new javax.swing.JButton();
+        requestHistoryBtn = new javax.swing.JButton();
+        emergencyNoticesPanel = new javax.swing.JPanel();
 
         jPanel1.setBackground(new java.awt.Color(244, 244, 244));
 
@@ -110,15 +111,15 @@ public class HospitalPanel extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel3.setText("Pending Registrations");
+        jLabel3.setText("Total Requests");
 
         jLabel4.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("5");
+        jLabel4.setText("18");
 
         jLabel5.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel5.setText("Awaiting Approval");
+        jLabel5.setText("All Time");
 
         iconLabel.setBackground(new java.awt.Color(255, 214, 214));
         iconLabel.setOpaque(true);
@@ -138,7 +139,7 @@ public class HospitalPanel extends javax.swing.JPanel {
                             .addComponent(jLabel5)
                             .addGroup(cardPanel01Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
                                 .addComponent(iconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(25, 25, 25))
         );
@@ -165,15 +166,15 @@ public class HospitalPanel extends javax.swing.JPanel {
 
         jLabel9.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel9.setText("Total Institutions");
+        jLabel9.setText("Pending Requests");
 
         jLabel10.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel10.setText("12");
+        jLabel10.setText("3");
 
         jLabel11.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel11.setText("Active in Network");
+        jLabel11.setText("Awaiting Response");
 
         iconLabel1.setBackground(new java.awt.Color(255, 214, 214));
         iconLabel1.setOpaque(true);
@@ -187,7 +188,7 @@ public class HospitalPanel extends javax.swing.JPanel {
                 .addGroup(cardPanel02Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(cardPanel02Layout.createSequentialGroup()
                         .addComponent(jLabel9)
-                        .addContainerGap(113, Short.MAX_VALUE))
+                        .addContainerGap(101, Short.MAX_VALUE))
                     .addGroup(cardPanel02Layout.createSequentialGroup()
                         .addGroup(cardPanel02Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
@@ -216,7 +217,7 @@ public class HospitalPanel extends javax.swing.JPanel {
 
         jLabel12.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel12.setText("Active Requests");
+        jLabel12.setText("Fullfilled Requests");
 
         jLabel13.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
@@ -224,7 +225,7 @@ public class HospitalPanel extends javax.swing.JPanel {
 
         jLabel14.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel14.setText("Blood Requests");
+        jLabel14.setText("Successfull");
 
         iconLabel2.setBackground(new java.awt.Color(255, 214, 214));
         iconLabel2.setOpaque(true);
@@ -265,15 +266,15 @@ public class HospitalPanel extends javax.swing.JPanel {
 
         jLabel6.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel6.setText("Critical Requests");
+        jLabel6.setText("Response Rate ");
 
         jLabel7.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel7.setText("3");
+        jLabel7.setText("89%");
 
         jLabel8.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel8.setText("Urgent Attention");
+        jLabel8.setText("Avg. Fullfillment");
 
         iconLabel3.setBackground(new java.awt.Color(255, 214, 214));
         iconLabel3.setOpaque(true);
@@ -287,7 +288,7 @@ public class HospitalPanel extends javax.swing.JPanel {
                 .addGroup(cardPanel04Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(cardPanel04Layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addContainerGap(109, Short.MAX_VALUE))
+                        .addContainerGap(117, Short.MAX_VALUE))
                     .addGroup(cardPanel04Layout.createSequentialGroup()
                         .addGroup(cardPanel04Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
@@ -314,7 +315,6 @@ public class HospitalPanel extends javax.swing.JPanel {
         jPanel4.add(cardPanel04);
 
         jPanel5.setBackground(new java.awt.Color(242, 242, 242));
-        jPanel5.setLayout(new java.awt.GridLayout(1, 2, 15, 0));
 
         mainPanel01.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -341,7 +341,7 @@ public class HospitalPanel extends javax.swing.JPanel {
             .addGroup(mainPanel01Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(recentReqLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(viewallBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
@@ -355,48 +355,16 @@ public class HospitalPanel extends javax.swing.JPanel {
                 .addContainerGap(353, Short.MAX_VALUE))
         );
 
-        jPanel5.add(mainPanel01);
-
-        mainPanel02.setBackground(new java.awt.Color(255, 255, 255));
-
-        pendingRegLabel.setFont(new java.awt.Font("Poppins SemiBold", 0, 20)); // NOI18N
-        pendingRegLabel.setForeground(new java.awt.Color(0, 0, 0));
-        pendingRegLabel.setText("Pending Registrations");
-
-        manageBtn.setBackground(new java.awt.Color(244, 244, 244));
-        manageBtn.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        manageBtn.setForeground(new java.awt.Color(102, 102, 102));
-        manageBtn.setText("Manage");
-        manageBtn.setBorder(null);
-        manageBtn.setBorderPainted(false);
-        manageBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                manageBtnActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout mainPanel02Layout = new javax.swing.GroupLayout(mainPanel02);
-        mainPanel02.setLayout(mainPanel02Layout);
-        mainPanel02Layout.setHorizontalGroup(
-            mainPanel02Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanel02Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(pendingRegLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
-                .addComponent(manageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mainPanel01, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        mainPanel02Layout.setVerticalGroup(
-            mainPanel02Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanel02Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addGroup(mainPanel02Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pendingRegLabel)
-                    .addComponent(manageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(352, Short.MAX_VALUE))
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mainPanel01, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
-        jPanel5.add(mainPanel02);
 
         titlePanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -406,7 +374,7 @@ public class HospitalPanel extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel2.setText("Manage your blood requests and view request history");
+        jLabel2.setText("Manage tyour Blood requests and view request history");
 
         javax.swing.GroupLayout titlePanelLayout = new javax.swing.GroupLayout(titlePanel);
         titlePanel.setLayout(titlePanelLayout);
@@ -429,6 +397,63 @@ public class HospitalPanel extends javax.swing.JPanel {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
+        quickActionPanel.setBackground(new java.awt.Color(255, 255, 255));
+        quickActionPanel.setPreferredSize(new java.awt.Dimension(213, 117));
+
+        recentReqLabel1.setFont(new java.awt.Font("Poppins SemiBold", 0, 20)); // NOI18N
+        recentReqLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        recentReqLabel1.setText("Quick Actions");
+
+        newRequestBtn.setBackground(new java.awt.Color(204, 0, 0));
+        newRequestBtn.setFont(new java.awt.Font("Poppins Medium", 0, 15)); // NOI18N
+        newRequestBtn.setForeground(new java.awt.Color(255, 255, 255));
+        newRequestBtn.setText("Create New Request");
+        newRequestBtn.setBorder(null);
+
+        requestHistoryBtn.setBackground(new java.awt.Color(244, 244, 244));
+        requestHistoryBtn.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        requestHistoryBtn.setForeground(new java.awt.Color(51, 51, 51));
+        requestHistoryBtn.setText("View Request History");
+        requestHistoryBtn.setBorder(null);
+
+        javax.swing.GroupLayout quickActionPanelLayout = new javax.swing.GroupLayout(quickActionPanel);
+        quickActionPanel.setLayout(quickActionPanelLayout);
+        quickActionPanelLayout.setHorizontalGroup(
+            quickActionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(quickActionPanelLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(quickActionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(recentReqLabel1)
+                    .addComponent(newRequestBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
+                    .addComponent(requestHistoryBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        quickActionPanelLayout.setVerticalGroup(
+            quickActionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(quickActionPanelLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(recentReqLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(newRequestBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(requestHistoryBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
+        );
+
+        emergencyNoticesPanel.setBackground(new java.awt.Color(255, 255, 255));
+        emergencyNoticesPanel.setPreferredSize(new java.awt.Dimension(213, 117));
+
+        javax.swing.GroupLayout emergencyNoticesPanelLayout = new javax.swing.GroupLayout(emergencyNoticesPanel);
+        emergencyNoticesPanel.setLayout(emergencyNoticesPanelLayout);
+        emergencyNoticesPanelLayout.setHorizontalGroup(
+            emergencyNoticesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        emergencyNoticesPanelLayout.setVerticalGroup(
+            emergencyNoticesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -437,8 +462,13 @@ public class HospitalPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(titlePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1011, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(quickActionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                            .addComponent(emergencyNoticesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE))))
                 .addGap(23, 23, 23))
         );
         jPanel1Layout.setVerticalGroup(
@@ -449,7 +479,12 @@ public class HospitalPanel extends javax.swing.JPanel {
                 .addGap(28, 28, 28)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(quickActionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(emergencyNoticesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(50, 50, 50))
         );
 
@@ -476,18 +511,13 @@ public class HospitalPanel extends javax.swing.JPanel {
         viewBloodReq.setVisible(true);
     }//GEN-LAST:event_viewallBtnActionPerformed
 
-    private void manageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageBtnActionPerformed
-        ManageInstitutions manageIns = new ManageInstitutions(homeScreen, true);
-        manageIns.setLocationRelativeTo(this);
-        manageIns.setVisible(true);
-    }//GEN-LAST:event_manageBtnActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel cardPanel01;
     private javax.swing.JPanel cardPanel02;
     private javax.swing.JPanel cardPanel03;
     private javax.swing.JPanel cardPanel04;
+    private javax.swing.JPanel emergencyNoticesPanel;
     private javax.swing.JLabel iconLabel;
     private javax.swing.JLabel iconLabel1;
     private javax.swing.JLabel iconLabel2;
@@ -510,10 +540,11 @@ public class HospitalPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel mainPanel01;
-    private javax.swing.JPanel mainPanel02;
-    private javax.swing.JButton manageBtn;
-    private javax.swing.JLabel pendingRegLabel;
+    private javax.swing.JButton newRequestBtn;
+    private javax.swing.JPanel quickActionPanel;
     private javax.swing.JLabel recentReqLabel;
+    private javax.swing.JLabel recentReqLabel1;
+    private javax.swing.JButton requestHistoryBtn;
     private javax.swing.JPanel titlePanel;
     private javax.swing.JButton viewallBtn;
     // End of variables declaration//GEN-END:variables

@@ -4,18 +4,47 @@ import com.dev.synapse.connection.MySQL;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class LoginScreen extends javax.swing.JFrame {
 
     private final HomeScreen homeScreen = new HomeScreen();
 
+    private Properties props;
+    private final String FILE_NAME = "credentials.properties";
+
     public LoginScreen() {
         initComponents();
         styles();
+        loadCredentials();
+    }
+
+    private void loadCredentials() {
+        props = new Properties();
+        try (FileInputStream in = new FileInputStream(FILE_NAME)) {
+            props.load(in);
+            userInput.setText(props.getProperty("username", ""));
+            passwordInput.setText(props.getProperty("password", ""));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveCredentials(String username, String password) {
+        try (FileOutputStream out = new FileOutputStream(FILE_NAME)) {
+            props.setProperty("username", username);
+            props.setProperty("password", password);
+            props.store(out, "Saved Login Credentials");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void styles() {
@@ -184,6 +213,8 @@ public class LoginScreen extends javax.swing.JFrame {
 
         String userSql = "SELECT user_id, password_hash FROM users WHERE username = ?";
         String roleSql = "SELECT role_id FROM user_assignments WHERE user_id = ?";
+        
+        saveCredentials(userInput.getText(), new String(passwordInput.getPassword()));
 
         try (Connection conn = MySQL.getConnection(); PreparedStatement userPS = conn.prepareStatement(userSql)) {
             userPS.setString(1, username);
