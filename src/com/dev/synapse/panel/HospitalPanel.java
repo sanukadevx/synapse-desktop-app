@@ -1,5 +1,6 @@
 package com.dev.synapse.panel;
 
+import com.dev.synapse.dialogs.CreateBloodRequest;
 import com.dev.synapse.dialogs.ManageInstitutions;
 import com.dev.synapse.dialogs.ViewBloodRequests;
 import com.dev.synapse.gui.HomeScreen;
@@ -410,6 +411,11 @@ public class HospitalPanel extends javax.swing.JPanel {
         newRequestBtn.setForeground(new java.awt.Color(255, 255, 255));
         newRequestBtn.setText("Create New Request");
         newRequestBtn.setBorder(null);
+        newRequestBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newRequestBtnActionPerformed(evt);
+            }
+        });
 
         requestHistoryBtn.setBackground(new java.awt.Color(244, 244, 244));
         requestHistoryBtn.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
@@ -509,6 +515,12 @@ public class HospitalPanel extends javax.swing.JPanel {
         viewBloodReq.setLocationRelativeTo(this);
         viewBloodReq.setVisible(true);
     }//GEN-LAST:event_viewallBtnActionPerformed
+
+    private void newRequestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newRequestBtnActionPerformed
+        CreateBloodRequest createBloodRequest = new CreateBloodRequest(homeScreen, true);
+        createBloodRequest.setLocationRelativeTo(this);
+        createBloodRequest.setVisible(true);
+    }//GEN-LAST:event_newRequestBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

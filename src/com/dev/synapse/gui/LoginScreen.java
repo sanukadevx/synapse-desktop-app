@@ -20,6 +20,8 @@ public class LoginScreen extends javax.swing.JFrame {
     private Properties props;
     private final String FILE_NAME = "credentials.properties";
 
+    public static int institutionId;
+
     public LoginScreen() {
         initComponents();
         styles();
@@ -56,6 +58,88 @@ public class LoginScreen extends javax.swing.JFrame {
         ));
     }
 
+    private int signInProcess() {
+
+        String username = userInput.getText().trim();
+        String password = String.valueOf(passwordInput.getPassword());
+
+        String userSql = "SELECT user_id, password_hash FROM users WHERE username = ?";
+        String roleSql = "SELECT role_id FROM user_assignments WHERE user_id = ?";
+        String insSql = "SELECT institution_id FROM user_assignments WHERE user_id = ?";
+
+        saveCredentials(username, password);
+
+        try (Connection conn = MySQL.getConnection(); PreparedStatement userPS = conn.prepareStatement(userSql)) {
+
+            userPS.setString(1, username);
+            ResultSet rsUser = userPS.executeQuery();
+
+            if (rsUser.next()) {
+                int userId = rsUser.getInt("user_id");
+                String storedPassword = rsUser.getString("password_hash");
+
+                if (password.equals(storedPassword)) {
+
+                    try (PreparedStatement insPS = conn.prepareStatement(insSql)) {
+                        insPS.setInt(1, userId);
+                        ResultSet rsIns = insPS.executeQuery();
+                        if (rsIns.next()) {
+                            this.institutionId = rsIns.getInt(1); // store in private variable
+                        } else {
+                            System.out.println("No institution found for this user.");
+                            return 0;
+                        }
+                    }
+
+                    try (PreparedStatement rolePstmt = conn.prepareStatement(roleSql)) {
+                        rolePstmt.setInt(1, userId);
+                        ResultSet rsRole = rolePstmt.executeQuery();
+
+                        if (rsRole.next()) {
+                            int roleId = rsRole.getInt("role_id");
+                            switch (roleId) {
+                                case 1:
+                                    System.out.println("Permission Denied! Your request hasn't been approved yet.");
+                                    break;
+                                case 2:
+                                    this.homeScreen.getHospitalPanel();
+                                    homeScreen.setVisible(true);
+                                    this.dispose();
+                                    break;
+                                case 3:
+                                    this.homeScreen.getBankPanel();
+                                    homeScreen.setVisible(true);
+                                    this.dispose();
+                                    break;
+                                case 4:
+                                    this.homeScreen.getAdminPanel();
+                                    homeScreen.setVisible(true);
+                                    this.dispose();
+                                    break;
+                                default:
+                                    System.out.println("Unknown role.");
+                                    break;
+                            }
+                        }
+                    }
+
+                    return institutionId; 
+
+                } else {
+                    System.out.println("Invalid username or password.");
+                }
+
+            } else {
+                System.out.println("Invalid username or password.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -78,6 +162,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Poppins", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Welcome Back !");
 
         jLabel2.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
@@ -92,6 +177,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
         registerHereBtn.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         registerHereBtn.setForeground(new java.awt.Color(0, 102, 204));
+        registerHereBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         registerHereBtn.setText("New to Synapse? Register Here");
         registerHereBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -122,6 +208,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Sign in to access Synapse system");
 
         signInBtn.setText("Sign in");
@@ -139,6 +226,9 @@ public class LoginScreen extends javax.swing.JFrame {
                 .addGap(63, 63, 63)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(75, 75, 75)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -148,16 +238,9 @@ public class LoginScreen extends javax.swing.JFrame {
                             .addComponent(passwordInput)
                             .addComponent(userInput)
                             .addComponent(jLabel2)
-                            .addComponent(signInBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(134, 134, 134)
-                        .addComponent(registerHereBtn))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addComponent(jLabel6))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(157, 157, 157)
-                        .addComponent(jLabel1)))
+                            .addComponent(signInBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(registerHereBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(72, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -208,67 +291,13 @@ public class LoginScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_registerHereBtnMouseClicked
 
     private void signInBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signInBtnActionPerformed
-        String username = userInput.getText().trim();
-        String password = String.valueOf(passwordInput.getPassword());
-
-        String userSql = "SELECT user_id, password_hash FROM users WHERE username = ?";
-        String roleSql = "SELECT role_id FROM user_assignments WHERE user_id = ?";
-        
-        saveCredentials(userInput.getText(), new String(passwordInput.getPassword()));
-
-        try (Connection conn = MySQL.getConnection(); PreparedStatement userPS = conn.prepareStatement(userSql)) {
-            userPS.setString(1, username);
-            ResultSet searchUserInfo = userPS.executeQuery();
-
-            if (searchUserInfo.next()) {
-                int userId = searchUserInfo.getInt("user_id");
-                String storedPassword = searchUserInfo.getString("password_hash");
-
-                if (password.equals(storedPassword)) {
-
-                    try (PreparedStatement rolePstmt = conn.prepareStatement(roleSql)) {
-                        rolePstmt.setInt(1, userId);
-                        ResultSet searchUserRole = rolePstmt.executeQuery();
-
-                        if (searchUserRole.next()) {
-                            int roleId = searchUserRole.getInt("role_id");
-
-                            switch (roleId) {
-                                case 1:
-                                    System.out.println("Permission Denied! Your request hasn't been approved yet.");
-                                    break;
-                                case 2:
-                                    this.homeScreen.getHospitalPanel();
-                                    homeScreen.setVisible(true);
-                                    this.dispose();
-                                    break;
-                                case 3:
-                                    this.homeScreen.getBankPanel();
-                                    homeScreen.setVisible(true);
-                                    this.dispose();
-                                    break;
-                                case 4:
-                                    this.homeScreen.getAdminPanel();
-                                    homeScreen.setVisible(true);
-                                    this.dispose();
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }
-
-                } else {
-                    System.out.println("Invalid username or password.");
-                }
-            } else {
-                System.out.println("Invalid username or password.");
-            }
-
-        } catch (SQLException e) {
-        }
+        signInProcess();
     }//GEN-LAST:event_signInBtnActionPerformed
 
+//    public static int getInstitutionId() {
+//        return institutionId;
+//    }
+    
     public static void main(String args[]) {
 
         FlatIntelliJLaf.setup();

@@ -31,6 +31,7 @@ public class MySQL {
         try {
             connection.createStatement().executeUpdate(query);
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
