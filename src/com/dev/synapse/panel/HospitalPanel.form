@@ -500,7 +500,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="recentRequestPanel" max="32767" attributes="0"/>
+                              <Component id="requestContainer" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="recentBloodReqLabel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="210" max="32767" attributes="0"/>
@@ -520,7 +520,7 @@
                               <Component id="viewallBtn" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                          <Component id="recentRequestPanel" max="32767" attributes="0"/>
+                          <Component id="requestContainer" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -559,7 +559,12 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewallBtnActionPerformed"/>
                   </Events>
                 </Component>
-                <Container class="javax.swing.JPanel" name="recentRequestPanel">
+                <Container class="javax.swing.JPanel" name="requestContainer">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                  </Properties>
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout">
                     <Property name="axis" type="int" value="1"/>

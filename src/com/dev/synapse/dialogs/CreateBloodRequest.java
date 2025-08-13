@@ -4,8 +4,10 @@
  */
 package com.dev.synapse.dialogs;
 
+import com.dev.synapse.classes.BloodRequest;
 import com.dev.synapse.connection.MySQL;
 import com.dev.synapse.gui.LoginScreen;
+import com.dev.synapse.panel.HospitalPanel;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import java.sql.ResultSet;
@@ -24,6 +26,8 @@ public class CreateBloodRequest extends javax.swing.JDialog {
     private final HashMap<String, Integer> bloodTypeMap;
     private final HashMap<String, Integer> urgencyLevelMap;
     
+    private HospitalPanel hospitalPanel;
+    
     /**
      * Creates new form CreateBloodRequest
      */
@@ -35,6 +39,7 @@ public class CreateBloodRequest extends javax.swing.JDialog {
         this.urgencyLevelMap = new HashMap<>();
         loadBloodTypes();
         loadUrgencyLevels();
+        this.hospitalPanel = new HospitalPanel();
     }
 
     private void styles() {
@@ -51,7 +56,7 @@ public class CreateBloodRequest extends javax.swing.JDialog {
             bloodTypeMap.put("Select Required Blood Type", 0);
 
             while (rs.next()) {
-                String insTypeName = rs.getString("name");
+                String insTypeName = rs.getString("blood_type");
                 bloodTypeMap.put(insTypeName, rs.getInt("blood_type_id"));
                 values.add(insTypeName);
             }
@@ -71,7 +76,7 @@ public class CreateBloodRequest extends javax.swing.JDialog {
             urgencyLevelMap.put("Select Urgency Level", 0);
 
             while (rs.next()) {
-                String urgencyLevelType = rs.getString("name");
+                String urgencyLevelType = rs.getString("urgency_level");
                 urgencyLevelMap.put(urgencyLevelType, rs.getInt("urgency_level_id"));
                 values.add(urgencyLevelType);
             }
@@ -219,6 +224,7 @@ public class CreateBloodRequest extends javax.swing.JDialog {
                 + DEFAULT_STATUS + "')");
         
         this.dispose();
+        hospitalPanel.loadRequests();
     }//GEN-LAST:event_createRequestBtnActionPerformed
 
     /**

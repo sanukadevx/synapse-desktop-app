@@ -1,5 +1,7 @@
 package com.dev.synapse.panel;
 
+import com.dev.synapse.classes.BloodRequest;
+import com.dev.synapse.connection.MySQL;
 import com.dev.synapse.dialogs.CreateBloodRequest;
 import com.dev.synapse.dialogs.ViewBloodRequests;
 import com.dev.synapse.gui.HomeScreen;
@@ -7,6 +9,12 @@ import com.dev.synapse.subpanels.BloodRequestSubPanel;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Box;
 import javax.swing.SwingConstants;
 
 public class HospitalPanel extends javax.swing.JPanel {
@@ -16,7 +24,51 @@ public class HospitalPanel extends javax.swing.JPanel {
     public HospitalPanel() {
         initComponents();
         styles();
-        new BloodRequestSubPanel().setVisible(true);
+        loadRequests();
+    }
+
+    public void loadRequests() {
+        requestContainer.removeAll();
+
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT * "
+                    + "FROM blood_requests a "
+                    + "INNER JOIN blood_types p ON a.blood_type_id = p.blood_type_id "
+                    + "INNER JOIN urgency_level ad ON a.urgency_level_id = ad.urgency_level_id "
+                    + "INNER JOIN institutions at ON a.requesting_hospital_id= at.institution_id "
+                    + "INNER JOIN request_status ast ON a.request_status_id = ast.request_status_id "
+            );
+
+            while (rs.next()) {
+                BloodRequest bloodRequest = new BloodRequest(
+                        rs.getString("blood_type"),
+                        rs.getString("status"),
+                        rs.getString("urgency_level"),
+                        rs.getString("request_id"),
+                        rs.getString("units_required"),
+                        LocalDate.now()
+                );
+
+                BloodRequestSubPanel bloodRequestPanel= new BloodRequestSubPanel(bloodRequest, this);
+                bloodRequestPanel.populateData();
+
+                // Set alignment for each panel
+                bloodRequestPanel.setAlignmentX(bloodRequestPanel.LEFT_ALIGNMENT);
+                bloodRequestPanel.setAlignmentY(bloodRequestPanel.TOP_ALIGNMENT);
+
+                requestContainer.add(bloodRequestPanel);
+                requestContainer.add(Box.createVerticalStrut(5));
+            }
+
+            // CRUCIAL: Add glue at the end to push everything to top
+            requestContainer.add(Box.createVerticalGlue());
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BloodRequest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        requestContainer.revalidate();
+        requestContainer.repaint();
     }
 
     private void styles() {
@@ -66,7 +118,6 @@ public class HospitalPanel extends javax.swing.JPanel {
         requestHistoryBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
     }
 
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -97,7 +148,7 @@ public class HospitalPanel extends javax.swing.JPanel {
         mainPanel01 = new javax.swing.JPanel();
         recentBloodReqLabel = new javax.swing.JLabel();
         viewallBtn = new javax.swing.JButton();
-        recentRequestPanel = new javax.swing.JPanel();
+        requestContainer = new javax.swing.JPanel();
         titlePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -340,7 +391,8 @@ public class HospitalPanel extends javax.swing.JPanel {
             }
         });
 
-        recentRequestPanel.setLayout(new javax.swing.BoxLayout(recentRequestPanel, javax.swing.BoxLayout.Y_AXIS));
+        requestContainer.setBackground(new java.awt.Color(255, 255, 255));
+        requestContainer.setLayout(new javax.swing.BoxLayout(requestContainer, javax.swing.BoxLayout.Y_AXIS));
 
         javax.swing.GroupLayout mainPanel01Layout = new javax.swing.GroupLayout(mainPanel01);
         mainPanel01.setLayout(mainPanel01Layout);
@@ -349,7 +401,7 @@ public class HospitalPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanel01Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(mainPanel01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(recentRequestPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(requestContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(mainPanel01Layout.createSequentialGroup()
                         .addComponent(recentBloodReqLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
@@ -364,7 +416,7 @@ public class HospitalPanel extends javax.swing.JPanel {
                     .addComponent(recentBloodReqLabel)
                     .addComponent(viewallBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(recentRequestPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(requestContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
         );
 
@@ -577,7 +629,7 @@ public class HospitalPanel extends javax.swing.JPanel {
     private javax.swing.JLabel recentBloodReqLabel;
     private javax.swing.JLabel recentReqLabel1;
     private javax.swing.JLabel recentReqLabel2;
-    private javax.swing.JPanel recentRequestPanel;
+    private javax.swing.JPanel requestContainer;
     private javax.swing.JButton requestHistoryBtn;
     private javax.swing.JPanel titlePanel;
     private javax.swing.JButton viewallBtn;
