@@ -9,6 +9,7 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.CardLayout;
 import javax.swing.JFrame;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 public class HomeScreen extends javax.swing.JFrame {
@@ -23,7 +24,6 @@ public class HomeScreen extends javax.swing.JFrame {
 
     public HomeScreen() {
         initComponents();
-        init();
         styles();
         loadPanels();
         loadAdminPanel();
@@ -31,16 +31,16 @@ public class HomeScreen extends javax.swing.JFrame {
 
     private void styles() {
         userProfilePanel.putClientProperty(FlatClientProperties.STYLE, "arc:15");
-        logoutBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
         logo.putClientProperty(FlatClientProperties.STYLE, "arc:15");
         logo.setIcon(new FlatSVGIcon("com/dev/synapse/assets/synapse-logo.svg", logo.getWidth(), logo.getHeight()));
         profileLogo.setIcon(new FlatSVGIcon("com/dev/synapse/assets/user-profile.svg", profileLogo.getWidth(), profileLogo.getHeight()));
+
+        FlatSVGIcon clockIcon = new FlatSVGIcon("com/dev/synapse/assets/logout-icon.svg", 15, 15);
+        logoutBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
+        logoutBtn.setIcon(clockIcon);
+        logoutBtn.setVerticalAlignment(SwingConstants.CENTER);
     }
 
-    private void init() {
-
-    }
-    
     private void loadPanels() {
         if (contentPanelLayout == null && contentPanel.getLayout() instanceof CardLayout) {
             this.contentPanelLayout = (CardLayout) contentPanel.getLayout();
@@ -208,7 +208,7 @@ public class HomeScreen extends javax.swing.JFrame {
                 .addGroup(subHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 354, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 432, Short.MAX_VALUE)
                 .addComponent(userProfilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(logoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -254,7 +254,7 @@ public class HomeScreen extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

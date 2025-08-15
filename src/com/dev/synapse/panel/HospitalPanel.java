@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.SwingConstants;
 
@@ -49,7 +50,7 @@ public class HospitalPanel extends javax.swing.JPanel {
                         LocalDate.now()
                 );
 
-                BloodRequestSubPanel bloodRequestPanel= new BloodRequestSubPanel(bloodRequest, this);
+                BloodRequestSubPanel bloodRequestPanel = new BloodRequestSubPanel(bloodRequest, this);
                 bloodRequestPanel.populateData();
 
                 // Set alignment for each panel
@@ -116,6 +117,9 @@ public class HospitalPanel extends javax.swing.JPanel {
 
         newRequestBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
         requestHistoryBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
+
+        jScrollPane1.setViewportBorder(null);
+        jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
     }
 
     @SuppressWarnings("unchecked")
@@ -148,7 +152,9 @@ public class HospitalPanel extends javax.swing.JPanel {
         mainPanel01 = new javax.swing.JPanel();
         recentBloodReqLabel = new javax.swing.JLabel();
         viewallBtn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
         requestContainer = new javax.swing.JPanel();
+        refreshBtn = new javax.swing.JButton();
         titlePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -393,20 +399,37 @@ public class HospitalPanel extends javax.swing.JPanel {
 
         requestContainer.setBackground(new java.awt.Color(255, 255, 255));
         requestContainer.setLayout(new javax.swing.BoxLayout(requestContainer, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane1.setViewportView(requestContainer);
+
+        refreshBtn.setBackground(new java.awt.Color(244, 244, 244));
+        refreshBtn.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        refreshBtn.setForeground(new java.awt.Color(102, 102, 102));
+        refreshBtn.setText("Refresh");
+        refreshBtn.setBorder(null);
+        refreshBtn.setBorderPainted(false);
+        refreshBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout mainPanel01Layout = new javax.swing.GroupLayout(mainPanel01);
         mainPanel01.setLayout(mainPanel01Layout);
         mainPanel01Layout.setHorizontalGroup(
             mainPanel01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanel01Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(17, 17, 17)
                 .addGroup(mainPanel01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(requestContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(mainPanel01Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addGap(16, 16, 16))
                     .addGroup(mainPanel01Layout.createSequentialGroup()
                         .addComponent(recentBloodReqLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
-                        .addComponent(viewallBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(16, 16, 16))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                        .addComponent(viewallBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(refreshBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16))))
         );
         mainPanel01Layout.setVerticalGroup(
             mainPanel01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -414,9 +437,10 @@ public class HospitalPanel extends javax.swing.JPanel {
                 .addGap(10, 10, 10)
                 .addGroup(mainPanel01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(recentBloodReqLabel)
-                    .addComponent(viewallBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(viewallBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(refreshBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(requestContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
         );
 
@@ -507,7 +531,7 @@ public class HospitalPanel extends javax.swing.JPanel {
                 .addComponent(newRequestBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(requestHistoryBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         emergencyNoticesPanel.setBackground(new java.awt.Color(255, 204, 204));
@@ -531,7 +555,7 @@ public class HospitalPanel extends javax.swing.JPanel {
             .addGroup(emergencyNoticesPanelLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(recentReqLabel2)
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -595,6 +619,10 @@ public class HospitalPanel extends javax.swing.JPanel {
         createBloodRequest.setVisible(true);
     }//GEN-LAST:event_newRequestBtnActionPerformed
 
+    private void refreshBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBtnActionPerformed
+        loadRequests();
+    }//GEN-LAST:event_refreshBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel cardPanel01;
@@ -623,12 +651,14 @@ public class HospitalPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel mainPanel01;
     private javax.swing.JButton newRequestBtn;
     private javax.swing.JPanel quickActionPanel;
     private javax.swing.JLabel recentBloodReqLabel;
     private javax.swing.JLabel recentReqLabel1;
     private javax.swing.JLabel recentReqLabel2;
+    private javax.swing.JButton refreshBtn;
     private javax.swing.JPanel requestContainer;
     private javax.swing.JButton requestHistoryBtn;
     private javax.swing.JPanel titlePanel;

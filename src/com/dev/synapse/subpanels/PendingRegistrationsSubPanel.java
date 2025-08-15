@@ -4,7 +4,8 @@
  */
 package com.dev.synapse.subpanels;
 
-import com.formdev.flatlaf.FlatClientProperties;
+import com.dev.synapse.classes.PendingRegistrations;
+import com.dev.synapse.panel.AdminPanel;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 /**
@@ -13,18 +14,25 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
  */
 public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form BloodRequestSubPanel
-     */
-    public PendingRegistrationsSubPanel() {
+    private PendingRegistrations pendingRegistrations;
+    private AdminPanel adminPanel;
+
+    public PendingRegistrationsSubPanel(PendingRegistrations pendingRegistrations, AdminPanel adminPanel) {
+        this.pendingRegistrations = pendingRegistrations;
+        this.adminPanel = adminPanel;
         initComponents();
         styles();
+    }
+
+    public void populateData() {
+        institutionName.setText(pendingRegistrations.getInsName());
+        institutionType.setText(pendingRegistrations.getInsType());
+        institutionEmail.setText(pendingRegistrations.getInsEmail());
     }
 
     private void styles() {
         FlatSVGIcon buildingIcon = new FlatSVGIcon("com/dev/synapse/assets/building-icon.svg", 20, 20);
         institutionName.setIcon(buildingIcon);
-//        approveBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
     }
 
     /**
@@ -37,11 +45,14 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         pendingLabel1 = new javax.swing.JLabel();
-        institutionName = new javax.swing.JLabel();
-        institutionEmail = new javax.swing.JLabel();
-        institutionType = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         approveBtn = new javax.swing.JButton();
         approveBtn1 = new javax.swing.JButton();
+        institutionEmail = new javax.swing.JLabel();
+        institutionType = new javax.swing.JLabel();
+        institutionName = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
 
         pendingLabel1.setBackground(new java.awt.Color(255, 255, 204));
         pendingLabel1.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
@@ -53,17 +64,10 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(234, 234, 234));
 
-        institutionName.setFont(new java.awt.Font("Poppins Medium", 0, 16)); // NOI18N
-        institutionName.setForeground(new java.awt.Color(51, 51, 51));
-        institutionName.setText("General Hospital");
+        jPanel3.setBackground(new java.awt.Color(244, 244, 244));
 
-        institutionEmail.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
-        institutionEmail.setForeground(new java.awt.Color(153, 153, 153));
-        institutionEmail.setText("chamau@gmail.com");
-
-        institutionType.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
-        institutionType.setForeground(new java.awt.Color(153, 153, 153));
-        institutionType.setText("Hospital");
+        jComboBox1.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         approveBtn.setBackground(new java.awt.Color(204, 255, 204));
         approveBtn.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
@@ -77,41 +81,76 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
         approveBtn1.setText("Reject");
         approveBtn1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)), null));
 
+        institutionEmail.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
+        institutionEmail.setForeground(new java.awt.Color(153, 153, 153));
+        institutionEmail.setText("chamau@gmail.com");
+
+        institutionType.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
+        institutionType.setForeground(new java.awt.Color(153, 153, 153));
+        institutionType.setText("Hospital");
+
+        institutionName.setFont(new java.awt.Font("Poppins Medium", 0, 16)); // NOI18N
+        institutionName.setForeground(new java.awt.Color(51, 51, 51));
+        institutionName.setText("General Hospital");
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 15, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(institutionName)
+                    .addComponent(institutionEmail)
+                    .addComponent(institutionType))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(approveBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addComponent(institutionName)
+                .addGap(0, 0, 0)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(institutionType)
+                    .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(approveBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addComponent(institutionEmail)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(institutionEmail)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(institutionName)
-                            .addComponent(institutionType))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 261, Short.MAX_VALUE)
-                        .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(approveBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32))))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(approveBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(institutionName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(institutionType)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(institutionEmail)
-                .addGap(20, 20, 20))
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -122,6 +161,9 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
     private javax.swing.JLabel institutionEmail;
     private javax.swing.JLabel institutionName;
     private javax.swing.JLabel institutionType;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel pendingLabel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,11 +1,24 @@
 package com.dev.synapse.panel;
 
+import com.dev.synapse.classes.AdminBloodRequest;
+import com.dev.synapse.classes.PendingRegistrations;
+import com.dev.synapse.connection.MySQL;
 import com.dev.synapse.dialogs.ManageInstitutions;
 import com.dev.synapse.dialogs.ViewBloodRequests;
 import com.dev.synapse.gui.HomeScreen;
+import com.dev.synapse.subpanels.AdminBloodRequestSubPanel;
+import com.dev.synapse.subpanels.PendingRegistrationsSubPanel;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.SwingConstants;
 
 public class AdminPanel extends javax.swing.JPanel {
@@ -15,6 +28,92 @@ public class AdminPanel extends javax.swing.JPanel {
     public AdminPanel() {
         initComponents();
         styles();
+        loadRequests();
+        loadPendingRegistrations();
+    }
+
+    public void loadRequests() {
+        requestContainer.removeAll();
+
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT * "
+                    + "FROM blood_requests a "
+                    + "INNER JOIN blood_types p ON a.blood_type_id = p.blood_type_id "
+                    + "INNER JOIN urgency_level ad ON a.urgency_level_id = ad.urgency_level_id "
+                    + "INNER JOIN institutions at ON a.requesting_hospital_id= at.institution_id "
+                    + "INNER JOIN request_status ast ON a.request_status_id = ast.request_status_id "
+            );
+
+            while (rs.next()) {
+                AdminBloodRequest adminBloodRequest = new AdminBloodRequest(
+                        rs.getString("blood_type"),
+                        rs.getString("status"),
+                        rs.getString("urgency_level"),
+                        rs.getString("institution_name"),
+                        rs.getString("units_required"),
+                        LocalDate.now()
+                );
+
+                AdminBloodRequestSubPanel adminBloodRequestPanel = new AdminBloodRequestSubPanel(adminBloodRequest, this);
+                adminBloodRequestPanel.populateData();
+
+                // Set alignment for each panel
+                adminBloodRequestPanel.setAlignmentX(adminBloodRequestPanel.LEFT_ALIGNMENT);
+                adminBloodRequestPanel.setAlignmentY(adminBloodRequestPanel.TOP_ALIGNMENT);
+
+                requestContainer.add(adminBloodRequestPanel);
+                requestContainer.add(Box.createVerticalStrut(5));
+            }
+
+            // CRUCIAL: Add glue at the end to push everything to top
+            requestContainer.add(Box.createVerticalGlue());
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminBloodRequest.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+
+        requestContainer.revalidate();
+        requestContainer.repaint();
+    }
+
+    public void loadPendingRegistrations() {
+        requestContainer2.removeAll();
+
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT * "
+                    + "FROM institutions a "
+                    + "INNER JOIN institution_type p ON a.institution_id = p.ins_type_id "
+            );
+
+            while (rs.next()) {
+                PendingRegistrations pendingReg = new PendingRegistrations(
+                        rs.getString("institution_name"),
+                        rs.getString("ins_name"),
+                        rs.getString("email")
+                );
+
+                PendingRegistrationsSubPanel pendingRegPanel = new PendingRegistrationsSubPanel(pendingReg, this);
+                pendingRegPanel.populateData();
+
+                // Set alignment for each panel
+                pendingRegPanel.setAlignmentX(pendingRegPanel.LEFT_ALIGNMENT);
+                pendingRegPanel.setAlignmentY(pendingRegPanel.TOP_ALIGNMENT);
+
+                requestContainer2.add(pendingRegPanel);
+                requestContainer2.add(Box.createVerticalStrut(5));
+            }
+
+            // CRUCIAL: Add glue at the end to push everything to top
+            requestContainer2.add(Box.createVerticalGlue());
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PendingRegistrations.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+
+        requestContainer2.revalidate();
+        requestContainer2.repaint();
     }
 
     private void styles() {
@@ -62,6 +161,14 @@ public class AdminPanel extends javax.swing.JPanel {
         FlatSVGIcon peopleIcon2 = new FlatSVGIcon("com/dev/synapse/assets/people-icon.svg", 28, 28);
         peopleIcon2.setColorFilter(new FlatSVGIcon.ColorFilter(color -> Color.red));
         pendingRegLabel.setIcon(peopleIcon2);
+
+        jScrollPanel.setViewportBorder(null);
+        jScrollPanel.setBorder(BorderFactory.createEmptyBorder());
+
+        jScrollPane1.setViewportBorder(null);
+        jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
+        requestContainer2.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+
     }
 
     @SuppressWarnings("unchecked")
@@ -94,9 +201,13 @@ public class AdminPanel extends javax.swing.JPanel {
         mainPanel01 = new javax.swing.JPanel();
         recentReqLabel = new javax.swing.JLabel();
         viewallBtn = new javax.swing.JButton();
+        jScrollPanel = new javax.swing.JScrollPane();
+        requestContainer = new javax.swing.JPanel();
         mainPanel02 = new javax.swing.JPanel();
         pendingRegLabel = new javax.swing.JLabel();
         manageBtn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        requestContainer2 = new javax.swing.JPanel();
         titlePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -334,15 +445,22 @@ public class AdminPanel extends javax.swing.JPanel {
             }
         });
 
+        requestContainer.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        requestContainer.setLayout(new javax.swing.BoxLayout(requestContainer, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPanel.setViewportView(requestContainer);
+
         javax.swing.GroupLayout mainPanel01Layout = new javax.swing.GroupLayout(mainPanel01);
         mainPanel01.setLayout(mainPanel01Layout);
         mainPanel01Layout.setHorizontalGroup(
             mainPanel01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanel01Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanel01Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(recentReqLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
-                .addComponent(viewallBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(mainPanel01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPanel)
+                    .addGroup(mainPanel01Layout.createSequentialGroup()
+                        .addComponent(recentReqLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+                        .addComponent(viewallBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(16, 16, 16))
         );
         mainPanel01Layout.setVerticalGroup(
@@ -352,7 +470,9 @@ public class AdminPanel extends javax.swing.JPanel {
                 .addGroup(mainPanel01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(recentReqLabel)
                     .addComponent(viewallBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(353, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+                .addGap(18, 18, 18))
         );
 
         jPanel5.add(mainPanel01);
@@ -375,15 +495,21 @@ public class AdminPanel extends javax.swing.JPanel {
             }
         });
 
+        requestContainer2.setLayout(new javax.swing.BoxLayout(requestContainer2, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane1.setViewportView(requestContainer2);
+
         javax.swing.GroupLayout mainPanel02Layout = new javax.swing.GroupLayout(mainPanel02);
         mainPanel02.setLayout(mainPanel02Layout);
         mainPanel02Layout.setHorizontalGroup(
             mainPanel02Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanel02Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(pendingRegLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
-                .addComponent(manageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanel02Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(mainPanel02Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(mainPanel02Layout.createSequentialGroup()
+                        .addComponent(pendingRegLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                        .addComponent(manageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(17, 17, 17))
         );
         mainPanel02Layout.setVerticalGroup(
@@ -393,7 +519,9 @@ public class AdminPanel extends javax.swing.JPanel {
                 .addGroup(mainPanel02Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(pendingRegLabel)
                     .addComponent(manageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(352, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                .addGap(19, 19, 19))
         );
 
         jPanel5.add(mainPanel02);
@@ -509,11 +637,15 @@ public class AdminPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPanel;
     private javax.swing.JPanel mainPanel01;
     private javax.swing.JPanel mainPanel02;
     private javax.swing.JButton manageBtn;
     private javax.swing.JLabel pendingRegLabel;
     private javax.swing.JLabel recentReqLabel;
+    private javax.swing.JPanel requestContainer;
+    private javax.swing.JPanel requestContainer2;
     private javax.swing.JPanel titlePanel;
     private javax.swing.JButton viewallBtn;
     // End of variables declaration//GEN-END:variables

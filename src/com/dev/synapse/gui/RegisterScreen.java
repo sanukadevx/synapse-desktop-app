@@ -52,7 +52,7 @@ public class RegisterScreen extends javax.swing.JFrame {
             insTypeMap.put("Select your Institution Type", 0);
 
             while (rs.next()) {
-                String insTypeName = rs.getString("name");
+                String insTypeName = rs.getString("ins_name");
                 insTypeMap.put(insTypeName, rs.getInt("ins_type_id"));
                 values.add(insTypeName);
             }
