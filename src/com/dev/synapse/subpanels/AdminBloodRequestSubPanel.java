@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 public class AdminBloodRequestSubPanel extends javax.swing.JPanel {
 
     private final AdminBloodRequest adminBloodRequest;
-    private AdminPanel adminPanel;
+    private final AdminPanel adminPanel;
 
     /**
      * Creates new form BloodRequestSubPanel

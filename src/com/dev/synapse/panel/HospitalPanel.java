@@ -120,6 +120,8 @@ public class HospitalPanel extends javax.swing.JPanel {
 
         jScrollPane1.setViewportBorder(null);
         jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
+        
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
     }
 
     @SuppressWarnings("unchecked")

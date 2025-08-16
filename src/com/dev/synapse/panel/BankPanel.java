@@ -1,11 +1,22 @@
 package com.dev.synapse.panel;
 
-import com.dev.synapse.dialogs.ManageInstitutions;
+import com.dev.synapse.classes.BloodInventory;
+import com.dev.synapse.classes.UrgentRequests;
+import com.dev.synapse.connection.MySQL;
 import com.dev.synapse.dialogs.ViewBloodRequests;
 import com.dev.synapse.gui.HomeScreen;
+import com.dev.synapse.subpanels.BloodInventorySubPanel;
+import com.dev.synapse.subpanels.UrgentRequestSubPanel;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.SwingConstants;
 
 public class BankPanel extends javax.swing.JPanel {
@@ -15,6 +26,87 @@ public class BankPanel extends javax.swing.JPanel {
     public BankPanel() {
         initComponents();
         styles();
+        loadBloodInventory();
+        loadUrgentRequests();
+    }
+
+    public void loadBloodInventory() {
+        inventoryContainer.removeAll();
+
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT * "
+                    + "FROM blood_inventory a "
+                    + "INNER JOIN blood_types p ON a.blood_type_id = p.blood_type_id "
+            );
+
+            while (rs.next()) {
+                BloodInventory bloodInventory = new BloodInventory(
+                        rs.getString("blood_type"),
+                        rs.getString("units_available")
+                );
+
+                BloodInventorySubPanel bloodInventoryPanel = new BloodInventorySubPanel(bloodInventory, this);
+                bloodInventoryPanel.populateData();
+
+                // Set alignment for each panel
+                bloodInventoryPanel.setAlignmentX(bloodInventoryPanel.LEFT_ALIGNMENT);
+                bloodInventoryPanel.setAlignmentY(bloodInventoryPanel.TOP_ALIGNMENT);
+
+                inventoryContainer.add(bloodInventoryPanel);
+                inventoryContainer.add(Box.createVerticalStrut(5));
+            }
+
+            // CRUCIAL: Add glue at the end to push everything to top
+            inventoryContainer.add(Box.createVerticalGlue());
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BloodInventory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        inventoryContainer.revalidate();
+        inventoryContainer.repaint();
+    }
+
+    public void loadUrgentRequests() {
+        requestContainer.removeAll();
+
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT * "
+                    + "FROM blood_requests a "
+                    + "INNER JOIN blood_types p ON a.blood_type_id = p.blood_type_id "
+                    + "INNER JOIN urgency_level ad ON a.urgency_level_id = ad.urgency_level_id "
+                    + "INNER JOIN institutions at ON a.requesting_hospital_id= at.institution_id "
+            );
+
+            while (rs.next()) {
+                UrgentRequests urgentRequests = new UrgentRequests(
+                        rs.getString("blood_type"),
+                        rs.getString("urgency_level"),
+                        rs.getString("institution_name"),
+                        rs.getString("units_required"),
+                        LocalDate.now()
+                );
+
+                UrgentRequestSubPanel urgentRequestPanel = new UrgentRequestSubPanel(urgentRequests, this);
+                urgentRequestPanel.populateData();
+
+                // Set alignment for each panel
+                urgentRequestPanel.setAlignmentX(urgentRequestPanel.LEFT_ALIGNMENT);
+                urgentRequestPanel.setAlignmentY(urgentRequestPanel.TOP_ALIGNMENT);
+
+                requestContainer.add(urgentRequestPanel);
+                requestContainer.add(Box.createVerticalStrut(5));
+            }
+
+            // CRUCIAL: Add glue at the end to push everything to top
+            requestContainer.add(Box.createVerticalGlue());
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UrgentRequests.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        requestContainer.revalidate();
+        requestContainer.repaint();
     }
 
     private void styles() {
@@ -61,6 +153,10 @@ public class BankPanel extends javax.swing.JPanel {
         FlatSVGIcon peopleIcon2 = new FlatSVGIcon("com/dev/synapse/assets/heart-icon.svg", 28, 28);
         peopleIcon2.setColorFilter(new FlatSVGIcon.ColorFilter(color -> Color.red));
         urgentReq.setIcon(peopleIcon2);
+
+        jScrollPane1.setViewportBorder(null);
+        jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
     }
 
     @SuppressWarnings("unchecked")
@@ -95,8 +191,11 @@ public class BankPanel extends javax.swing.JPanel {
         inventoryPanel = new javax.swing.JPanel();
         recentBloodReqLabel = new javax.swing.JLabel();
         manageBloodBtn = new javax.swing.JButton();
+        inventoryContainer = new javax.swing.JPanel();
         urgentReqPanel = new javax.swing.JPanel();
         urgentReq = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        requestContainer = new javax.swing.JPanel();
 
         jPanel1.setBackground(new java.awt.Color(244, 244, 244));
 
@@ -359,16 +458,24 @@ public class BankPanel extends javax.swing.JPanel {
             }
         });
 
+        inventoryContainer.setBackground(new java.awt.Color(255, 255, 255));
+        inventoryContainer.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 10));
+
         javax.swing.GroupLayout inventoryPanelLayout = new javax.swing.GroupLayout(inventoryPanel);
         inventoryPanel.setLayout(inventoryPanelLayout);
         inventoryPanelLayout.setHorizontalGroup(
             inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inventoryPanelLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(recentBloodReqLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(manageBloodBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inventoryPanelLayout.createSequentialGroup()
+                        .addComponent(inventoryContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(22, 22, 22))
+                    .addGroup(inventoryPanelLayout.createSequentialGroup()
+                        .addComponent(recentBloodReqLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
+                        .addComponent(manageBloodBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16))))
         );
         inventoryPanelLayout.setVerticalGroup(
             inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,7 +484,9 @@ public class BankPanel extends javax.swing.JPanel {
                 .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(recentBloodReqLabel)
                     .addComponent(manageBloodBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(392, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(inventoryContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
         );
 
         urgentReqPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -387,20 +496,28 @@ public class BankPanel extends javax.swing.JPanel {
         urgentReq.setForeground(new java.awt.Color(0, 0, 0));
         urgentReq.setText("Urgent Requests");
 
+        requestContainer.setBackground(new java.awt.Color(255, 255, 255));
+        requestContainer.setLayout(new javax.swing.BoxLayout(requestContainer, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane1.setViewportView(requestContainer);
+
         javax.swing.GroupLayout urgentReqPanelLayout = new javax.swing.GroupLayout(urgentReqPanel);
         urgentReqPanel.setLayout(urgentReqPanelLayout);
         urgentReqPanelLayout.setHorizontalGroup(
             urgentReqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(urgentReqPanelLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(urgentReq)
-                .addContainerGap(224, Short.MAX_VALUE))
+                .addGroup(urgentReqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(urgentReq)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         urgentReqPanelLayout.setVerticalGroup(
             urgentReqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(urgentReqPanelLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(urgentReq)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -466,6 +583,7 @@ public class BankPanel extends javax.swing.JPanel {
     private javax.swing.JLabel iconLabel1;
     private javax.swing.JLabel iconLabel2;
     private javax.swing.JLabel iconLabel3;
+    private javax.swing.JPanel inventoryContainer;
     private javax.swing.JPanel inventoryPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -483,20 +601,10 @@ public class BankPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel mainPanel01;
-    private javax.swing.JPanel mainPanel2;
-    private javax.swing.JPanel mainPanel3;
-    private javax.swing.JPanel mainPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton manageBloodBtn;
-    private javax.swing.JButton manageBtn;
-    private javax.swing.JButton manageBtn1;
-    private javax.swing.JButton manageBtn2;
-    private javax.swing.JButton manageBtn3;
     private javax.swing.JLabel recentBloodReqLabel;
-    private javax.swing.JLabel recentReqLabel;
-    private javax.swing.JLabel recentReqLabel1;
-    private javax.swing.JLabel recentReqLabel2;
-    private javax.swing.JLabel recentReqLabel3;
+    private javax.swing.JPanel requestContainer;
     private javax.swing.JPanel titlePanel;
     private javax.swing.JLabel urgentReq;
     private javax.swing.JPanel urgentReqPanel;

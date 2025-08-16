@@ -5,8 +5,15 @@
 package com.dev.synapse.subpanels;
 
 import com.dev.synapse.classes.PendingRegistrations;
+import com.dev.synapse.connection.MySQL;
 import com.dev.synapse.panel.AdminPanel;
+import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.awt.Dimension;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -14,14 +21,18 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
  */
 public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
 
-    private PendingRegistrations pendingRegistrations;
+    private final PendingRegistrations pendingRegistrations;
     private AdminPanel adminPanel;
+    
+    private final HashMap<String, Integer> roleMap;
 
     public PendingRegistrationsSubPanel(PendingRegistrations pendingRegistrations, AdminPanel adminPanel) {
         this.pendingRegistrations = pendingRegistrations;
         this.adminPanel = adminPanel;
+        this.roleMap = new HashMap<>();
         initComponents();
         styles();
+        loadRoles();
     }
 
     public void populateData() {
@@ -33,6 +44,28 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
     private void styles() {
         FlatSVGIcon buildingIcon = new FlatSVGIcon("com/dev/synapse/assets/building-icon.svg", 20, 20);
         institutionName.setIcon(buildingIcon);
+
+        roleComboBox.putClientProperty(FlatClientProperties.STYLE, "arc:15");
+    }
+
+    private void loadRoles() {
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT * FROM `user_roles`");
+            Vector<String> values = new Vector<>();
+            values.add("Assign Role");
+            roleMap.put("Assign Role", 0);
+
+            while (rs.next()) {
+                String roleType = rs.getString("name");
+                roleMap.put(roleType, rs.getInt("role_id"));
+                values.add(roleType);
+            }
+
+            DefaultComboBoxModel dcm = new DefaultComboBoxModel(values);
+            roleComboBox.setModel(dcm);
+
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -46,7 +79,7 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
 
         pendingLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        roleComboBox = new javax.swing.JComboBox<>();
         approveBtn = new javax.swing.JButton();
         approveBtn1 = new javax.swing.JButton();
         institutionEmail = new javax.swing.JLabel();
@@ -66,20 +99,30 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
 
         jPanel3.setBackground(new java.awt.Color(244, 244, 244));
 
-        jComboBox1.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        roleComboBox.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        roleComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         approveBtn.setBackground(new java.awt.Color(204, 255, 204));
         approveBtn.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
         approveBtn.setForeground(new java.awt.Color(0, 153, 51));
         approveBtn.setText("Approve");
         approveBtn.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 51)), null));
+        approveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                approveBtnActionPerformed(evt);
+            }
+        });
 
         approveBtn1.setBackground(new java.awt.Color(255, 204, 204));
         approveBtn1.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
         approveBtn1.setForeground(new java.awt.Color(255, 0, 0));
         approveBtn1.setText("Reject");
         approveBtn1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)), null));
+        approveBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                approveBtn1ActionPerformed(evt);
+            }
+        });
 
         institutionEmail.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
         institutionEmail.setForeground(new java.awt.Color(153, 153, 153));
@@ -121,7 +164,7 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(approveBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(roleComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -135,7 +178,7 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
                     .addComponent(institutionType)
                     .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(approveBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(roleComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addComponent(institutionEmail)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
@@ -154,6 +197,14 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void approveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_approveBtnActionPerformed
+
+    private void approveBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveBtn1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_approveBtn1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton approveBtn;
@@ -161,9 +212,9 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
     private javax.swing.JLabel institutionEmail;
     private javax.swing.JLabel institutionName;
     private javax.swing.JLabel institutionType;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel pendingLabel1;
+    private javax.swing.JComboBox<String> roleComboBox;
     // End of variables declaration//GEN-END:variables
 }

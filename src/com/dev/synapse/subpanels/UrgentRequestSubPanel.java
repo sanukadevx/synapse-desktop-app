@@ -4,8 +4,13 @@
  */
 package com.dev.synapse.subpanels;
 
+import com.dev.synapse.classes.BloodRequest;
+import com.dev.synapse.classes.UrgentRequests;
+import com.dev.synapse.panel.BankPanel;
+import com.dev.synapse.panel.HospitalPanel;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -13,16 +18,29 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
  */
 public class UrgentRequestSubPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form BloodRequestSubPanel
-     */
-    public UrgentRequestSubPanel() {
+    private final UrgentRequests urgentRequests;
+    private BankPanel bankPanel;
+
+    public UrgentRequestSubPanel(UrgentRequests urgentRequests, BankPanel bankPanel) {
+        this.urgentRequests = urgentRequests;
+        this.bankPanel = bankPanel;
         initComponents();
         styles();
     }
 
+    public void populateData() {
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy:MM:dd");
+        requestDateLabel.setText(urgentRequests.getRequestDate().format(timeFormatter));
+
+        bloodTypeLabel.setText(urgentRequests.getBloodType());
+        urgencyLevelLabel.setText(urgentRequests.getUrgencyLevel());
+        insNameLabel.setText(urgentRequests.getInsName());
+        requiredUnitsLabel.setText(urgentRequests.getRequiredUnits());
+    }
+
     private void styles() {
         bloodTypeLabel.putClientProperty(FlatClientProperties.STYLE, "arc:999");
+        urgencyLevelLabel.putClientProperty(FlatClientProperties.STYLE, "arc:999");
         fullfillBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
         detailsBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
     }
@@ -37,14 +55,16 @@ public class UrgentRequestSubPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         pendingLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        bloodTypeLabel = new javax.swing.JLabel();
-        urgencyLevelLabel = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        detailsBtn = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         fullfillBtn = new javax.swing.JButton();
-        detailsBtn = new javax.swing.JButton();
+        requiredUnitsLabel = new javax.swing.JLabel();
+        urgencyLevelLabel = new javax.swing.JLabel();
+        bloodTypeLabel = new javax.swing.JLabel();
+        requestDateLabel = new javax.swing.JLabel();
+        insNameLabel = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
 
         pendingLabel1.setBackground(new java.awt.Color(255, 255, 204));
         pendingLabel1.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
@@ -56,33 +76,12 @@ public class UrgentRequestSubPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(234, 234, 234));
 
-        jLabel2.setFont(new java.awt.Font("Poppins Medium", 0, 16)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setText("City Medical Center");
+        jPanel1.setBackground(new java.awt.Color(244, 244, 244));
 
-        jLabel6.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel6.setText("2025-08-17");
-
-        bloodTypeLabel.setBackground(new java.awt.Color(204, 255, 204));
-        bloodTypeLabel.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
-        bloodTypeLabel.setForeground(new java.awt.Color(0, 153, 51));
-        bloodTypeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        bloodTypeLabel.setText("O+");
-        bloodTypeLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bloodTypeLabel.setOpaque(true);
-
-        urgencyLevelLabel.setBackground(new java.awt.Color(255, 204, 204));
-        urgencyLevelLabel.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
-        urgencyLevelLabel.setForeground(new java.awt.Color(255, 0, 0));
-        urgencyLevelLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        urgencyLevelLabel.setText("High");
-        urgencyLevelLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        urgencyLevelLabel.setOpaque(true);
-
-        jLabel7.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel7.setText("4");
+        detailsBtn.setBackground(new java.awt.Color(255, 255, 255));
+        detailsBtn.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
+        detailsBtn.setForeground(new java.awt.Color(51, 51, 51));
+        detailsBtn.setText("Details");
 
         jLabel8.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(153, 153, 153));
@@ -93,57 +92,104 @@ public class UrgentRequestSubPanel extends javax.swing.JPanel {
         fullfillBtn.setForeground(new java.awt.Color(255, 255, 255));
         fullfillBtn.setText("Fullfill");
 
-        detailsBtn.setBackground(new java.awt.Color(244, 244, 244));
-        detailsBtn.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
-        detailsBtn.setForeground(new java.awt.Color(51, 51, 51));
-        detailsBtn.setText("Details");
+        requiredUnitsLabel.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
+        requiredUnitsLabel.setForeground(new java.awt.Color(153, 153, 153));
+        requiredUnitsLabel.setText("4");
+
+        urgencyLevelLabel.setBackground(new java.awt.Color(255, 204, 204));
+        urgencyLevelLabel.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
+        urgencyLevelLabel.setForeground(new java.awt.Color(255, 0, 0));
+        urgencyLevelLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        urgencyLevelLabel.setText("High");
+        urgencyLevelLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        urgencyLevelLabel.setOpaque(true);
+
+        bloodTypeLabel.setBackground(new java.awt.Color(204, 255, 204));
+        bloodTypeLabel.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
+        bloodTypeLabel.setForeground(new java.awt.Color(0, 153, 51));
+        bloodTypeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        bloodTypeLabel.setText("O+");
+        bloodTypeLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bloodTypeLabel.setOpaque(true);
+
+        requestDateLabel.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
+        requestDateLabel.setForeground(new java.awt.Color(153, 153, 153));
+        requestDateLabel.setText("2025-08-17");
+
+        insNameLabel.setFont(new java.awt.Font("Poppins Medium", 0, 16)); // NOI18N
+        insNameLabel.setForeground(new java.awt.Color(51, 51, 51));
+        insNameLabel.setText("City Medical Center");
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 15, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(requiredUnitsLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(requestDateLabel))
+                    .addComponent(insNameLabel)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(bloodTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(urgencyLevelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(fullfillBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(detailsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bloodTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(urgencyLevelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(insNameLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(requestDateLabel)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(requiredUnitsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fullfillBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(detailsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(bloodTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(206, 206, 206)
-                        .addComponent(urgencyLevelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel2)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel7)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel8)
-                            .addGap(18, 18, 18)
-                            .addComponent(jLabel6)
-                            .addGap(6, 6, 6)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(fullfillBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(detailsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bloodTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(urgencyLevelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fullfillBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(detailsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -152,11 +198,13 @@ public class UrgentRequestSubPanel extends javax.swing.JPanel {
     private javax.swing.JLabel bloodTypeLabel;
     private javax.swing.JButton detailsBtn;
     private javax.swing.JButton fullfillBtn;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel insNameLabel;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel pendingLabel1;
+    private javax.swing.JLabel requestDateLabel;
+    private javax.swing.JLabel requiredUnitsLabel;
     private javax.swing.JLabel urgencyLevelLabel;
     // End of variables declaration//GEN-END:variables
 }

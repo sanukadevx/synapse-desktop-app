@@ -85,7 +85,6 @@ public class AdminPanel extends javax.swing.JPanel {
                     + "FROM institutions a "
                     + "INNER JOIN institution_type p ON a.institution_id = p.ins_type_id "
             );
-
             while (rs.next()) {
                 PendingRegistrations pendingReg = new PendingRegistrations(
                         rs.getString("institution_name"),
@@ -93,14 +92,14 @@ public class AdminPanel extends javax.swing.JPanel {
                         rs.getString("email")
                 );
 
-                PendingRegistrationsSubPanel pendingRegPanel = new PendingRegistrationsSubPanel(pendingReg, this);
-                pendingRegPanel.populateData();
+                PendingRegistrationsSubPanel pendingRegSubPanel = new PendingRegistrationsSubPanel(pendingReg, this);
+                pendingRegSubPanel.populateData();
 
                 // Set alignment for each panel
-                pendingRegPanel.setAlignmentX(pendingRegPanel.LEFT_ALIGNMENT);
-                pendingRegPanel.setAlignmentY(pendingRegPanel.TOP_ALIGNMENT);
+                pendingRegSubPanel.setAlignmentX(pendingRegSubPanel.LEFT_ALIGNMENT);
+                pendingRegSubPanel.setAlignmentY(pendingRegSubPanel.TOP_ALIGNMENT);
 
-                requestContainer2.add(pendingRegPanel);
+                requestContainer2.add(pendingRegSubPanel);
                 requestContainer2.add(Box.createVerticalStrut(5));
             }
 
@@ -169,6 +168,7 @@ public class AdminPanel extends javax.swing.JPanel {
         jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
         requestContainer2.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
 
+        jScrollPanel.getVerticalScrollBar().setUnitIncrement(10);
     }
 
     @SuppressWarnings("unchecked")
