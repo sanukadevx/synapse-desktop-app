@@ -81,7 +81,6 @@ public class HospitalPanel extends javax.swing.JPanel {
         mainPanel01.putClientProperty(FlatClientProperties.STYLE, "arc:15");
         quickActionPanel.putClientProperty(FlatClientProperties.STYLE, "arc:15");
         emergencyNoticesPanel.putClientProperty(FlatClientProperties.STYLE, "arc:15");
-        viewallBtn.putClientProperty(FlatClientProperties.STYLE, "arc:15");
 
         FlatSVGIcon clockIcon = new FlatSVGIcon("com/dev/synapse/assets/heart-icon.svg", 30, 30);
         clockIcon.setColorFilter(new FlatSVGIcon.ColorFilter(color -> Color.red));
@@ -120,7 +119,7 @@ public class HospitalPanel extends javax.swing.JPanel {
 
         jScrollPane1.setViewportBorder(null);
         jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
-        
+
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
     }
 
@@ -153,7 +152,6 @@ public class HospitalPanel extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         mainPanel01 = new javax.swing.JPanel();
         recentBloodReqLabel = new javax.swing.JLabel();
-        viewallBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         requestContainer = new javax.swing.JPanel();
         refreshBtn = new javax.swing.JButton();
@@ -387,18 +385,6 @@ public class HospitalPanel extends javax.swing.JPanel {
         recentBloodReqLabel.setForeground(new java.awt.Color(0, 0, 0));
         recentBloodReqLabel.setText("Recent Blood Requests");
 
-        viewallBtn.setBackground(new java.awt.Color(244, 244, 244));
-        viewallBtn.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        viewallBtn.setForeground(new java.awt.Color(102, 102, 102));
-        viewallBtn.setText("View All");
-        viewallBtn.setBorder(null);
-        viewallBtn.setBorderPainted(false);
-        viewallBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewallBtnActionPerformed(evt);
-            }
-        });
-
         requestContainer.setBackground(new java.awt.Color(255, 255, 255));
         requestContainer.setLayout(new javax.swing.BoxLayout(requestContainer, javax.swing.BoxLayout.Y_AXIS));
         jScrollPane1.setViewportView(requestContainer);
@@ -422,16 +408,12 @@ public class HospitalPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanel01Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(mainPanel01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(mainPanel01Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addGap(16, 16, 16))
+                    .addComponent(jScrollPane1)
                     .addGroup(mainPanel01Layout.createSequentialGroup()
                         .addComponent(recentBloodReqLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
-                        .addComponent(viewallBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(refreshBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(refreshBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(16, 16, 16))
         );
         mainPanel01Layout.setVerticalGroup(
             mainPanel01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -439,7 +421,6 @@ public class HospitalPanel extends javax.swing.JPanel {
                 .addGap(10, 10, 10)
                 .addGroup(mainPanel01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(recentBloodReqLabel)
-                    .addComponent(viewallBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(refreshBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
@@ -511,6 +492,11 @@ public class HospitalPanel extends javax.swing.JPanel {
         requestHistoryBtn.setForeground(new java.awt.Color(51, 51, 51));
         requestHistoryBtn.setText("View Request History");
         requestHistoryBtn.setBorder(null);
+        requestHistoryBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                requestHistoryBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout quickActionPanelLayout = new javax.swing.GroupLayout(quickActionPanel);
         quickActionPanel.setLayout(quickActionPanelLayout);
@@ -609,12 +595,6 @@ public class HospitalPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void viewallBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewallBtnActionPerformed
-        ViewBloodRequests viewBloodReq = new ViewBloodRequests(homeScreen, true);
-        viewBloodReq.setLocationRelativeTo(this);
-        viewBloodReq.setVisible(true);
-    }//GEN-LAST:event_viewallBtnActionPerformed
-
     private void newRequestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newRequestBtnActionPerformed
         CreateBloodRequest createBloodRequest = new CreateBloodRequest(homeScreen, true);
         createBloodRequest.setLocationRelativeTo(this);
@@ -624,6 +604,12 @@ public class HospitalPanel extends javax.swing.JPanel {
     private void refreshBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBtnActionPerformed
         loadRequests();
     }//GEN-LAST:event_refreshBtnActionPerformed
+
+    private void requestHistoryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestHistoryBtnActionPerformed
+        ViewBloodRequests viewBloodReq = new ViewBloodRequests(homeScreen, true);
+        viewBloodReq.setLocationRelativeTo(this);
+        viewBloodReq.setVisible(true);
+    }//GEN-LAST:event_requestHistoryBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -664,6 +650,5 @@ public class HospitalPanel extends javax.swing.JPanel {
     private javax.swing.JPanel requestContainer;
     private javax.swing.JButton requestHistoryBtn;
     private javax.swing.JPanel titlePanel;
-    private javax.swing.JButton viewallBtn;
     // End of variables declaration//GEN-END:variables
 }

@@ -2,6 +2,7 @@ package com.dev.synapse.panel;
 
 import com.dev.synapse.classes.UrgentRequests;
 import com.dev.synapse.connection.MySQL;
+import com.dev.synapse.dialogs.ManageBloodInventory;
 import com.dev.synapse.dialogs.ViewBloodRequests;
 import com.dev.synapse.gui.HomeScreen;
 import com.dev.synapse.subpanels.UrgentRequestSubPanel;
@@ -1122,9 +1123,9 @@ public class BankPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void manageBloodBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageBloodBtnActionPerformed
-        ViewBloodRequests viewBloodReq = new ViewBloodRequests(homeScreen, true);
-        viewBloodReq.setLocationRelativeTo(this);
-        viewBloodReq.setVisible(true);
+        ManageBloodInventory manageBloodInventory = new ManageBloodInventory(homeScreen, true);
+        manageBloodInventory.setLocationRelativeTo(this);
+        manageBloodInventory.setVisible(true);
     }//GEN-LAST:event_manageBloodBtnActionPerformed
 
     private void stockReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockReportBtnActionPerformed
