@@ -1,5 +1,6 @@
 package com.dev.synapse.gui;
 
+import com.dev.synapse.connection.MySQL;
 import com.dev.synapse.dialogs.UserProfile;
 import com.dev.synapse.panel.AdminPanel;
 import com.dev.synapse.panel.BankPanel;
@@ -11,6 +12,8 @@ import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import java.sql.SQLException;
+import java.sql.ResultSet;
 
 public class HomeScreen extends javax.swing.JFrame {
 
@@ -27,6 +30,7 @@ public class HomeScreen extends javax.swing.JFrame {
         styles();
         loadPanels();
         loadAdminPanel();
+        loadUserProfile();
     }
 
     private void styles() {
@@ -80,17 +84,20 @@ public class HomeScreen extends javax.swing.JFrame {
         this.contentPanelLayout.show(contentPanel, "bank_panel");
     }
 
-//    private void loadUserProfile() {
-//        try {
-//            ResultSet rs1 = MySQL.executeSearch("SELECT `username` FROM `users`");
+    private void loadUserProfile() {
+        try {
+            ResultSet rs1 = MySQL.executeSearch("SELECT `username` FROM `users`");
 //            ResultSet rs2 = MySQL.executeSearch("SELECT `role_id` FROM `user_assignments`");
-//            
-//            homeUserName.setText(rs1.toString());
-//            
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
+
+            if (rs1.next()) { // Move cursor to the first row
+                homeUserName.setText(rs1.getString("username"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

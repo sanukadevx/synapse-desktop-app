@@ -70,7 +70,7 @@
                   <EmptySpace pref="95" max="32767" attributes="0"/>
                   <Component id="approveBtn" min="-2" pref="95" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="approveBtn1" min="-2" pref="95" max="-2" attributes="0"/>
+                  <Component id="rejectBtn" min="-2" pref="95" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="roleComboBox" min="-2" pref="138" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
@@ -87,7 +87,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="institutionType" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="approveBtn" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="approveBtn1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="rejectBtn" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="roleComboBox" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
@@ -145,7 +145,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="approveBtnActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="approveBtn1">
+        <Component class="javax.swing.JButton" name="rejectBtn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="cc" red="ff" type="rgb"/>
@@ -170,7 +170,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="approveBtn1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rejectBtnActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="institutionEmail">

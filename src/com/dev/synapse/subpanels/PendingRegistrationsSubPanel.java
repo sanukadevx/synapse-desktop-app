@@ -11,6 +11,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.Dimension;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
@@ -23,7 +24,7 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
 
     private final PendingRegistrations pendingRegistrations;
     private AdminPanel adminPanel;
-    
+
     private final HashMap<String, Integer> roleMap;
 
     public PendingRegistrationsSubPanel(PendingRegistrations pendingRegistrations, AdminPanel adminPanel) {
@@ -81,7 +82,7 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         roleComboBox = new javax.swing.JComboBox<>();
         approveBtn = new javax.swing.JButton();
-        approveBtn1 = new javax.swing.JButton();
+        rejectBtn = new javax.swing.JButton();
         institutionEmail = new javax.swing.JLabel();
         institutionType = new javax.swing.JLabel();
         institutionName = new javax.swing.JLabel();
@@ -113,14 +114,14 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
             }
         });
 
-        approveBtn1.setBackground(new java.awt.Color(255, 204, 204));
-        approveBtn1.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
-        approveBtn1.setForeground(new java.awt.Color(255, 0, 0));
-        approveBtn1.setText("Reject");
-        approveBtn1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)), null));
-        approveBtn1.addActionListener(new java.awt.event.ActionListener() {
+        rejectBtn.setBackground(new java.awt.Color(255, 204, 204));
+        rejectBtn.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
+        rejectBtn.setForeground(new java.awt.Color(255, 0, 0));
+        rejectBtn.setText("Reject");
+        rejectBtn.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)), null));
+        rejectBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                approveBtn1ActionPerformed(evt);
+                rejectBtnActionPerformed(evt);
             }
         });
 
@@ -162,7 +163,7 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
                 .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(approveBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rejectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(roleComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
@@ -177,7 +178,7 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(institutionType)
                     .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(approveBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rejectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(roleComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addComponent(institutionEmail)
@@ -198,23 +199,38 @@ public class PendingRegistrationsSubPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void approveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveBtnActionPerformed
-        // TODO add your handling code here:
+        String sql = "UPDATE institutions SET institution_registration_status_id = 2 WHERE institution_id = ";
+        int insId = 6;
+
+        try {
+            MySQL.executeIUD(sql + insId);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_approveBtnActionPerformed
 
-    private void approveBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveBtn1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_approveBtn1ActionPerformed
+    private void rejectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejectBtnActionPerformed
+//        try {
+//            MySQL.executeIUD("");
+//            
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+
+        this.setVisible(false);
+    }//GEN-LAST:event_rejectBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton approveBtn;
-    private javax.swing.JButton approveBtn1;
     private javax.swing.JLabel institutionEmail;
     private javax.swing.JLabel institutionName;
     private javax.swing.JLabel institutionType;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel pendingLabel1;
+    private javax.swing.JButton rejectBtn;
     private javax.swing.JComboBox<String> roleComboBox;
     // End of variables declaration//GEN-END:variables
 }
